@@ -6,6 +6,10 @@ ENDSTONE_PLUGIN(/*name=*/"papi", /*version=*/"0.0.1", /*main_class=*/papi::detai
     description = "A Placeholder Plugin for Endstone";
     website = "https://github.com/endstone-essentials/papi";
     authors = {"Vincent <magicdroidx@gmail.com>"};
+
+    command("placeholderapi") //
+        .description("PlaceholderAPI Command")
+        .aliases("papi");
 }
 
 namespace papi::details {
