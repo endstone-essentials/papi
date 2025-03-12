@@ -3,10 +3,8 @@
 #include <endstone/endstone.hpp>
 
 namespace papi {
-class PlaceholderAPI {
+class PlaceholderAPI : public endstone::Plugin {
 public:
-    virtual ~PlaceholderAPI() = default;
-
     /**
      * Translates all placeholders into their corresponding values.
      * <br>The pattern of a valid placeholder is <code>{<identifier>:<params>}</code>.
