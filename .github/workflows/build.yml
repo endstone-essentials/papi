@@ -8,46 +8,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_windows:
-    name: Build on Windows
-    runs-on: windows-2022
+  build_plugin:
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [ RelWithDebInfo ]
+        os: [ ubuntu-20.04, windows-2019 ]
+
+    name: Build Plugin on ${{ matrix.os }} (${{ matrix.build_type }})
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Set up MSVC
+        if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x86_64
 
-      - name: Set up CMake and Ninja
-        uses: lukka/get-cmake@latest
-
-      - name: Build with CMake
-        run: |
-          mkdir build
-          cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
-          cmake --build .
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: example-plugin-windows
-          path: |
-            ./build/endstone_*.dll
-            ./build/endstone_*.pdb
-
-  build_linux:
-    name: Build on Ubuntu
-    runs-on: ubuntu-20.04
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
       - name: Set up Clang 15
+        if: runner.os == 'Linux'
         env:
           LLVM_VERSION: 15
         run: |
@@ -70,8 +52,59 @@ jobs:
           cmake -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
           cmake --build .
 
-      - name: Upload Artifacts
+      - name: Upload Artifacts (Windows)
+        if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
-          name: example-plugin-linux
-          path: ./build/endstone_*.so
+          name: papi-windows
+          path: |
+            ./build/endstone_*.dll
+            ./build/endstone_*.pdb
+
+      - name: Upload Artifacts (Linux)
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: papi-linux
+          path: |
+            ./build/endstone_*.so
+
+  build_wheels:
+    name: Build Wheel (${{ matrix.python-tag }}-${{ matrix.platform }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-2019 ]
+        python-tag: [ "cp39", "cp310", "cp311", "cp312", "cp313" ]
+        include:
+          - os: ubuntu-latest
+            platform: manylinux_x86_64
+          - os: windows-2019
+            platform: win_amd64
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up MSVC (Windows)
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86_64
+
+      - name: Set up CMake and Ninja
+        uses: lukka/get-cmake@latest
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.23.0
+        env:
+          CIBW_BUILD: ${{ matrix.python-tag }}-${{ matrix.platform }}
+          CIBW_BUILD_VERBOSITY: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: papi-wheels-${{ matrix.python-tag }}-${{ matrix.platform }}
+          path: ./wheelhouse/*.whl
