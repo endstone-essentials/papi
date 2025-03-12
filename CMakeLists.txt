@@ -30,12 +30,12 @@ if (NOT DEFINED SKBUILD)
     endif ()
 else ()
     execute_process(
-            COMMAND "${Python_EXECUTABLE}" -m nanobind --cmake_dir
-            OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE nanobind_ROOT)
+            COMMAND "${Python_EXECUTABLE}" -m pybind11 --cmakedir
+            OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE pybind11_ROOT)
     find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
-    find_package(nanobind CONFIG REQUIRED)
+    find_package(pybind11 CONFIG REQUIRED)
 
-    nanobind_add_module(_${PROJECT_NAME} endstone_papi/_papi.cpp)
+    pybind11_add_module(_${PROJECT_NAME} endstone_papi/_papi.cpp)
     target_include_directories(_${PROJECT_NAME} PRIVATE include)
     target_link_libraries(_${PROJECT_NAME} PRIVATE endstone::endstone)
     install(TARGETS _papi DESTINATION "endstone_papi" COMPONENT python)
