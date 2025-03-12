@@ -8,6 +8,6 @@ namespace papi::details {
 class PlaceholderAPIPlugin : public PlaceholderAPI {
 public:
     void onLoad() override;
-    std::string setPlaceholder(const endstone::Player &player, std::string_view text) override;
+    [[nodiscard]] std::string setPlaceholder(const endstone::Player &player, std::string_view text) const override;
 };
 } // namespace papi::details

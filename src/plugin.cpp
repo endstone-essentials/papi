@@ -18,10 +18,10 @@ void PlaceholderAPIPlugin::onLoad()
     Plugin::onLoad();
 }
 
-std::string PlaceholderAPIPlugin::setPlaceholder(const endstone::Player &player, std::string_view text)
+std::string PlaceholderAPIPlugin::setPlaceholder(const endstone::Player &player, std::string_view text) const
 {
     // TODO: implement the actual functionality
-    return std::string(text) + " " + player.getName();
+    return std::string(text);
 }
 
 } // namespace papi::details

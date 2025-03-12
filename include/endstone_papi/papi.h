@@ -13,7 +13,7 @@ public:
      * @param text Text to set the placeholder values in
      * @return String containing all translated placeholders
      */
-    virtual std::string setPlaceholder(const endstone::Player &player, std::string_view text) = 0;
+    [[nodiscard]] virtual std::string setPlaceholder(const endstone::Player &player, std::string_view text) const = 0;
 
     // TODO(daoge): check https://github.com/PlaceholderAPI/PlaceholderAPI/blob/master/src/main/java/me/clip/placeholderapi/PlaceholderAPI.java
     //  we need methods e.g.:

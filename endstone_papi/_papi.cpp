@@ -16,7 +16,7 @@ public:
         }
     }
 
-    std::string setPlaceholder(const endstone::Player &player, std::string_view text)
+    std::string setPlaceholder(const endstone::Player &player, std::string_view text) const
     {
         if (!plugin_) {
             throw std::runtime_error("PlaceholderAPI is not enabled!");
