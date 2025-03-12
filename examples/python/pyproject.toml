@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "endstone-papi-pyexample"
+version = "0.0.1"
+dependencies = ["endstone-papi"]
+authors = [
+    { name = "Vincent", email = "magicdroidx@gmail.com" },
+]
+description = "An example plugin that depends on the Placeholder API"
+
+[project.entry-points."endstone"]
+papi_pyexample = "endstone_papi_pyexample:JoinExample"
