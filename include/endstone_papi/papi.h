@@ -14,5 +14,13 @@ public:
      * @return String containing all translated placeholders
      */
     virtual std::string setPlaceholder(const endstone::Player &player, std::string_view text) = 0;
+
+    // TODO(daoge): check https://github.com/PlaceholderAPI/PlaceholderAPI/blob/master/src/main/java/me/clip/placeholderapi/PlaceholderAPI.java
+    //  we need methods e.g.:
+    //  - isRegistered
+    //  - getRegisteredIdentifiers
+    //  - getPlaceholderPattern (let's use bracket instead of percentage)
+    //  - containsPlaceholders
+    //  - registerExpansion
 };
 } // namespace papi
