@@ -13,12 +13,16 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(endstone)
 
-add_library(endstone_papi INTERFACE)
-add_library(endstone_papi::endstone_papi ALIAS endstone_papi)
-target_include_directories(endstone_papi INTERFACE include)
 if (NOT CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
+    add_library(endstone_papi INTERFACE)
+    target_include_directories(endstone_papi INTERFACE include)
     return()
 endif ()
 
 endstone_add_plugin(${PROJECT_NAME} src/plugin.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
+
+option(PAPI_BUILD_EXAMPLE "Build the PlaceholderAPI example plugin" OFF)
+if (NOT PAPI_BUILD_EXAMPLE STREQUAL OFF)
+    add_subdirectory(examples/cpp)
+endif ()
