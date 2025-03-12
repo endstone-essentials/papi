@@ -12,4 +12,4 @@ _deps
 CMakeUserPresets.json
 .idea
 build
-cmake-build-release
+cmake-build-*/

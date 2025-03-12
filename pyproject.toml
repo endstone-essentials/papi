@@ -1,0 +1,26 @@
+[build-system]
+requires = ["scikit-build-core", "nanobind"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "endstone-papi"
+version = "0.0.1"
+authors = [
+    { name = "Vincent Wu", email = "magicdroidx@gmail.com" }
+]
+description = "A Placeholder API Plugin for Endstone."
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["plugin", "python", "minecraft", "bedrock"]
+license = { file = "LICENSE" }
+
+[tool.scikit-build]
+build-dir = "build/{wheel_tag}"
+cmake.args = ["-G Ninja"]
+cmake.build-type = "RelWithDebInfo"
+cmake.define = { BUILD_TESTING = "OFF" }
+wheel.packages = ["endstone_papi"]
+wheel.license-files = ["LICENSE"]
+install.components = ["python"]
+install.strip = false
+sdist.exclude = ["endstone_papi/*.cpp"]
