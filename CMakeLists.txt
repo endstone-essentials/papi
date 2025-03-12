@@ -13,5 +13,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(endstone)
 
+add_library(endstone_papi INTERFACE)
+add_library(endstone_papi::endstone_papi ALIAS endstone_papi)
+target_include_directories(endstone_papi INTERFACE include)
+if (NOT CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
+    return()
+endif ()
+
 endstone_add_plugin(${PROJECT_NAME} src/plugin.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
