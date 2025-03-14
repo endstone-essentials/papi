@@ -8,68 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_plugin:
-    strategy:
-      fail-fast: false
-      matrix:
-        build_type: [ RelWithDebInfo ]
-        os: [ ubuntu-20.04, windows-2019 ]
-
-    name: Build Plugin on ${{ matrix.os }} (${{ matrix.build_type }})
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set up MSVC
-        if: runner.os == 'Windows'
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: x86_64
-
-      - name: Set up Clang 15
-        if: runner.os == 'Linux'
-        env:
-          LLVM_VERSION: 15
-        run: |
-          sudo apt-get update -y -q
-          sudo apt-get install -y -q lsb-release wget software-properties-common gnupg
-          sudo wget https://apt.llvm.org/llvm.sh
-          sudo chmod +x llvm.sh
-          sudo ./llvm.sh ${LLVM_VERSION}
-          sudo apt-get install -y -q libc++-${LLVM_VERSION}-dev libc++abi-${LLVM_VERSION}-dev
-          sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang-${LLVM_VERSION} 100
-          sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-${LLVM_VERSION} 100
-
-      - name: Set up CMake and Ninja
-        uses: lukka/get-cmake@latest
-
-      - name: Build with CMake
-        run: |
-          mkdir build
-          cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
-          cmake --build .
-
-      - name: Upload Artifacts (Windows)
-        if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
-        with:
-          name: papi-windows
-          path: |
-            ./build/endstone_*.dll
-            ./build/endstone_*.pdb
-
-      - name: Upload Artifacts (Linux)
-        if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v4
-        with:
-          name: papi-linux
-          path: |
-            ./build/endstone_*.so
-
-  build_wheels:
+  build:
     name: Build Wheel (${{ matrix.python-tag }}-${{ matrix.platform }})
     runs-on: ${{ matrix.os }}
     strategy:
@@ -106,5 +45,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: papi-wheels-${{ matrix.python-tag }}-${{ matrix.platform }}
+          name: papi-${{ matrix.python-tag }}-${{ matrix.platform }}
           path: ./wheelhouse/*.whl
