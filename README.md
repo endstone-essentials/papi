@@ -7,12 +7,11 @@ C++ support and Python bindings via the `endstone_papi` package for seamless int
 
 ```
 endstone-essentials/papi/
-├── endstone_papi/      # Python package for accessing the PAPI from Python
+├── endstone_papi/      # Python package (for Python plugins)
 ├── examples/
 │   ├── cpp/            # C++ example plugin
 │   └── python/         # Python example plugin
-├── include/            # Header files
-├── src/                # Implementation source code
+├── include/            # Header files (for C++ plugins)
 ├── CMakeLists.txt      # CMake build configuration
 ├── pyproject.toml      # Python package configuration
 ├── LICENSE             # License information
