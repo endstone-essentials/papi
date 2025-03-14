@@ -1,8 +1,7 @@
 from endstone.plugin import Service
 from endstone import Player
 
-__all__ = ['PlaceholderAPI']
-
+__all__ = ["PlaceholderAPI"]
 
 class PlaceholderAPI(Service):
     def set_placeholder(self, player: Player, text: str) -> str:
