@@ -7,10 +7,14 @@ class JoinExample(Plugin):
     api_version = "0.6"
     soft_depend = ["papi"]
 
+    def __init__(self):
+        super().__init__()
+        self.papi: PlaceholderAPI | None = None
+
     def on_enable(self):
         if self.server.plugin_manager.is_plugin_enabled("papi"):
             self.register_events(self)
-            self.papi = PlaceholderAPI(self)
+            self.papi = self.server.service_manager.load("PlaceholderAPI")
         else:
             self.logger.warning("Could not find PlaceholderAPI! This plugin is required.")
             self.server.plugin_manager.disable_plugin(self)
