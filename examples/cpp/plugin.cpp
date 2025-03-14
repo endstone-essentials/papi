@@ -7,6 +7,7 @@ public:
     {
         if (getServer().getPluginManager().isPluginEnabled("papi")) {
             registerEvent(&JoinExample::onPlayerJoin, *this, endstone::EventPriority::Highest);
+            papi_ = getServer().getServiceManager().load<papi::PlaceholderAPI>("PlaceholderAPI");
         }
         else {
             getLogger().warning("Could not find PlaceholderAPI! This plugin is required.");
@@ -17,10 +18,12 @@ public:
     void onPlayerJoin(endstone::PlayerJoinEvent &event)
     {
         std::string join_text = "{player_name} joined the server! Their game mode is {player_gamemode}";
-        auto &papi = *static_cast<papi::PlaceholderAPI *>(getServer().getPluginManager().getPlugin("papi"));
-        join_text = papi.setPlaceholder(event.getPlayer(), join_text);
+        join_text = papi_->setPlaceholder(event.getPlayer(), join_text);
         event.setJoinMessage(join_text);
     }
+
+private:
+    std::shared_ptr<papi::PlaceholderAPI> papi_;
 };
 
 ENDSTONE_PLUGIN(/*name=*/"papi_example", /*version=*/"0.0.1", /*main_class=*/JoinExample)
