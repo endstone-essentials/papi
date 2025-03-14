@@ -12,7 +12,7 @@ public:
 
     [[nodiscard]] std::string setPlaceholder(const endstone::Player &player, std::string_view text) const override
     {
-        PYBIND11_OVERRIDE_PURE_NAME(std::string, PlaceholderAPI, "set_placeholder", setPlaceholder);
+        PYBIND11_OVERRIDE_PURE_NAME(std::string, PlaceholderAPI, "set_placeholder", setPlaceholder, player, text);
     }
 };
 
