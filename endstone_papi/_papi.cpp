@@ -4,38 +4,23 @@
 
 namespace py = pybind11;
 
-// NOTE: we need this wrapper to EXPLICITLY get the reference to papi::PlaceholderAPI.
-// Down casting a C++ type cannot be easily done in Python but is easy to do in C++ with static_cast.
-// Let's keep it like this until I find a cleaner way one day.
-class PyPlaceholderAPI {
+// Trampoline class, see:
+// https://pybind11.readthedocs.io/en/stable/advanced/classes.html#overriding-virtual-functions-in-python
+class PyPlaceholderAPI : public papi::PlaceholderAPI {
 public:
-    explicit PyPlaceholderAPI(endstone::Plugin &plugin)
-    {
-        if (plugin.getServer().getPluginManager().isPluginEnabled("papi")) {
-            plugin_ = static_cast<papi::PlaceholderAPI *>(plugin.getServer().getPluginManager().getPlugin("papi"));
-        }
-    }
+    using PlaceholderAPI::PlaceholderAPI;
 
-    std::string setPlaceholder(const endstone::Player &player, std::string_view text) const
+    [[nodiscard]] std::string setPlaceholder(const endstone::Player &player, std::string_view text) const override
     {
-        if (!plugin_) {
-            throw std::runtime_error("PlaceholderAPI is not enabled!");
-        }
-        return plugin_->setPlaceholder(player, text);
+        PYBIND11_OVERRIDE_PURE_NAME(std::string, PlaceholderAPI, "set_placeholder", setPlaceholder);
     }
-    // TODO(daoge): don't forget to add a wrapper function here whenever you add a method in PlaceholderAPI
-
-private:
-    papi::PlaceholderAPI *plugin_ = nullptr;
 };
 
 PYBIND11_MODULE(_papi, m)
 {
-    py::object plugin = py::module_::import("endstone.plugin").attr("Plugin");
-
-    py::class_<PyPlaceholderAPI>(m, "PlaceholderAPI")
-        .def(py::init<endstone::Plugin &>(), py::arg("plugin"))
-        .def("set_placeholder", &PyPlaceholderAPI::setPlaceholder, py::arg("player"), py::arg("text"),
+    py::class_<papi::PlaceholderAPI, PyPlaceholderAPI, std::shared_ptr<papi::PlaceholderAPI>>(m, "PlaceholderAPI")
+        .def(py::init<>())
+        .def("set_placeholder", &papi::PlaceholderAPI::setPlaceholder, py::arg("player"), py::arg("text"),
              "Translates all placeholders into their corresponding values.");
     // TODO(daoge): add more bindings here if needed
 }
