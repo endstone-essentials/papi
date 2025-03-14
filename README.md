@@ -3,6 +3,11 @@
 A Placeholder API plugin for Endstone, inspired by the famous PAPI plugin for Spigot. This project provides both native
 C++ support and Python bindings via the `endstone_papi` package for seamless integration.
 
+> [!NOTE]
+> This plugin is still under development and has not been released to PyPI. If you are interested in using this plugin,
+> please check out the latest build from our GitHub Actions
+> page: [Build Artifacts](https://github.com/endstone-essentials/papi/actions/workflows/build.yml).
+
 ## Project Structure
 
 ```
@@ -21,6 +26,9 @@ endstone-essentials/papi/
 ## Usages
 
 ### C++
+
+> [!NOTE]
+> you can obtain the `papi.h` header file packaged within the `.whl` file.
 
 ```cpp
 #include <endstone/endstone.hpp>
@@ -82,6 +90,10 @@ class JoinExample(Plugin):
 ```
 
 For the full codes, check our [Python Example Plugin](examples/python).
+
+## Screenshots
+
+![](assets/screenshot.jpg)
 
 ## Contributing
 
