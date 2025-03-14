@@ -1,4 +1,4 @@
-from endstone_papi._papi import PlaceholderAPI as _PlaceholderAPI
+from ._papi import PlaceholderAPI as _PlaceholderAPI
 from endstone import Player
 
 
