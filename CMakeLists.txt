@@ -30,5 +30,6 @@ pybind11_add_module(_${PROJECT_NAME} endstone_papi/_papi.cpp)
 target_include_directories(_${PROJECT_NAME} PRIVATE include)
 target_link_libraries(_${PROJECT_NAME} PRIVATE endstone::endstone)
 install(TARGETS _papi DESTINATION "endstone_papi" COMPONENT python)
+install(DIRECTORY include/ DESTINATION "endstone_papi/include" COMPONENT python)
 
 add_subdirectory(examples/cpp)
