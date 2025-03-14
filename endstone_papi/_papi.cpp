@@ -18,7 +18,11 @@ public:
 
 PYBIND11_MODULE(_papi, m)
 {
-    py::class_<papi::PlaceholderAPI, PyPlaceholderAPI, std::shared_ptr<papi::PlaceholderAPI>>(m, "PlaceholderAPI")
+    py::module_::import("endstone");
+    py::module_::import("endstone.plugin");
+
+    py::class_<papi::PlaceholderAPI, PyPlaceholderAPI, endstone::Service, std::shared_ptr<papi::PlaceholderAPI>>(
+        m, "PlaceholderAPI")
         .def(py::init<>())
         .def("set_placeholder", &papi::PlaceholderAPI::setPlaceholder, py::arg("player"), py::arg("text"),
              "Translates all placeholders into their corresponding values.");
