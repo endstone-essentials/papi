@@ -1,5 +1,6 @@
+from endstone import Player
 from endstone.plugin import Plugin, ServicePriority
-
+from endstone.command import Command, CommandSender
 from .pypapi import PlaceholderAPI
 
 
@@ -7,7 +8,21 @@ class PlaceholderAPIPlugin(Plugin):
     api_version = "0.6"
 
     commands = {
+        "papi": {
+            "description": "PlaceholderAPI command",
+            "usage": [
+                "/papi parse <str: text> [player: player]",
+                "/papi list",
+            ],
+            "permission": "papi.command.papi",
+        }
+    }
 
+    permissions = {
+        "papi.command.papi": {
+            "description": "Allows users to use the /papi command",
+            "default": "op",
+        }
     }
 
     def __init__(self):
@@ -19,3 +34,23 @@ class PlaceholderAPIPlugin(Plugin):
 
     def on_disable(self):
         self.server.service_manager.unregister_all(self)
+
+    def on_command(self, sender: CommandSender, command: Command, args: list[str]) -> bool:
+        match args[0]:
+            case "parse":
+                text: str = args[1]
+                player: Player | None = None
+                if len(args) == 3:
+                    player_name: str = args[2]
+                    player = self.server.get_player(player_name)
+                    if player is None:
+                        sender.send_error_message(f"Could not find player {player_name}!")
+                        return False
+
+                sender.send_message(self._api.set_placeholder(player, text))
+            case "list":
+                sender.send_message("Available placeholders:")
+                for identifier in self._api.get_registered_identifiers():
+                    sender.send_message(f"- {identifier}")
+
+        return True
