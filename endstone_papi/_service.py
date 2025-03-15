@@ -1,11 +1,47 @@
+import re
+
+from typing import Callable
+from endstone.plugin import Plugin
 from ._papi import PlaceholderAPI as _PlaceholderAPI
 from endstone import Player
+from ._chars_replacer import apply
 
 
 class PlaceholderAPI(_PlaceholderAPI):
-    def __init__(self):
+    def __init__(self, plugin: Plugin):
         _PlaceholderAPI.__init__(self)
+        self._plugin = plugin
+        self._registry = {}
+        self._placeholder_pattern = re.compile(r"[{]([^{}]+)[}]")
 
-    def set_placeholder(self, player: Player, text: str) -> str:
-        # TODO: implement this
-        return text.format(player_name=player.name, player_gamemode=player.game_mode)
+    def set_placeholder(self, player: Player | None, text: str) -> str:
+        return apply(text, player, self._registry.get)
+
+    def set_placeholder(self, player: Player | None, texts: list[str]) -> list[str]:
+        results: list[str] = []
+        for text in texts:
+            results.append(self.set_placeholder(player, text))
+        return results
+
+    def is_registered(self, identifier: str) -> bool:
+        return identifier in self._registry
+
+    def get_registered_identifiers(self) -> list[str]:
+        return list(self._registry.keys())
+
+    def get_placeholder_pattern(self) -> re.Pattern[str]:
+        return self._placeholder_pattern
+
+    def contains_placeholders(self, text: str) -> bool:
+        return self._placeholder_pattern.search(text) is not None
+
+    def register_placeholder(self, plugin: Plugin, identifier: str,
+                             processor: Callable[[Player | None, str | None], str]) -> bool:
+        if self.is_registered(identifier):
+            identifier = f"{plugin.name}:{identifier}"
+        if self.is_registered(identifier):
+            self._plugin.logger.warning(f"Plugin {plugin.name} trying to register a duplicate placeholder: {identifier}")
+            return False
+
+        self._registry[identifier] = processor
+        return True
