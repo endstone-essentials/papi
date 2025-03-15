@@ -2,9 +2,9 @@ import re
 
 from typing import Callable
 from endstone.plugin import Plugin
-from ._papi import PlaceholderAPI as _PlaceholderAPI
+from .pypapi import PlaceholderAPI as _PlaceholderAPI
 from endstone import Player
-from ._chars_replacer import apply
+from .chars_replacer import apply
 
 
 class PlaceholderAPI(_PlaceholderAPI):

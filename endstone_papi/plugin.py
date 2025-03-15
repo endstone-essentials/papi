@@ -1,10 +1,14 @@
 from endstone.plugin import Plugin, ServicePriority
 
-from ._service import PlaceholderAPI
+from .pypapi import PlaceholderAPI
 
 
 class PlaceholderAPIPlugin(Plugin):
     api_version = "0.6"
+
+    commands = {
+
+    }
 
     def __init__(self):
         super().__init__()

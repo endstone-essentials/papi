@@ -1,4 +1,4 @@
-from ._service import PlaceholderAPI
-from ._plugin import PlaceholderAPIPlugin
+from .pypapi import PlaceholderAPI
+from .plugin import PlaceholderAPIPlugin
 
 __all__ = ["PlaceholderAPI", "PlaceholderAPIPlugin"]
