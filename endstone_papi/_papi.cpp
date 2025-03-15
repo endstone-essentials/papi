@@ -51,9 +51,9 @@ PYBIND11_MODULE(_papi, m)
     py::class_<papi::PlaceholderAPI, PyPlaceholderAPI, endstone::Service, std::shared_ptr<papi::PlaceholderAPI>>(
         m, "PlaceholderAPI")
         .def(py::init<>())
-        .def("set_placeholder", &papi::PlaceholderAPI::setPlaceholder, py::arg("player"), py::arg("text"),
+        .def("set_placeholder", py::overload_cast<const endstone::Player&, std::string_view>(&papi::PlaceholderAPI::setPlaceholder, py::const_), py::arg("player"), py::arg("text"),
              "Translates all placeholders into their corresponding values.")
-        .def("set_placeholder", &papi::PlaceholderAPI::setPlaceholder, py::arg("player"), py::arg("texts"),
+        .def("set_placeholder", py::overload_cast<const endstone::Player&, std::vector<std::string_view>>(&papi::PlaceholderAPI::setPlaceholder, py::const_), py::arg("player"), py::arg("texts"),
              "Translates all placeholders into their corresponding values.")
         .def("is_registered", &papi::PlaceholderAPI::isRegistered, py::arg("identifier"),
             "Check if a specific placeholder identifier is currently registered.")
