@@ -15,11 +15,6 @@ public:
         PYBIND11_OVERRIDE_PURE_NAME(std::string, PlaceholderAPI, "set_placeholder", setPlaceholder, player, text);
     }
 
-    [[nodiscard]] std::vector<std::string> setPlaceholder(const endstone::Player &player, std::vector<std::string_view> texts) const override
-    {
-        PYBIND11_OVERRIDE_PURE_NAME(std::vector<std::string>, PlaceholderAPI, "set_placeholder", setPlaceholder, player, texts);
-    }
-
     [[nodiscard]] bool isRegistered(std::string_view identifier) const override
     {
         PYBIND11_OVERRIDE_PURE_NAME(bool, PlaceholderAPI, "is_registered", isRegistered, identifier);
@@ -51,9 +46,7 @@ PYBIND11_MODULE(_papi, m)
     py::class_<papi::PlaceholderAPI, PyPlaceholderAPI, endstone::Service, std::shared_ptr<papi::PlaceholderAPI>>(
         m, "PlaceholderAPI")
         .def(py::init<>())
-        .def("set_placeholder", py::overload_cast<const endstone::Player&, std::string_view>(&papi::PlaceholderAPI::setPlaceholder, py::const_), py::arg("player"), py::arg("text"),
-             "Translates all placeholders into their corresponding values.")
-        .def("set_placeholder", py::overload_cast<const endstone::Player&, std::vector<std::string_view>>(&papi::PlaceholderAPI::setPlaceholder, py::const_), py::arg("player"), py::arg("texts"),
+        .def("set_placeholder", &papi::PlaceholderAPI::setPlaceholder, py::arg("player"), py::arg("text"),
              "Translates all placeholders into their corresponding values.")
         .def("is_registered", &papi::PlaceholderAPI::isRegistered, py::arg("identifier"),
             "Check if a specific placeholder identifier is currently registered.")

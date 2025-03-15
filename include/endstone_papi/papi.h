@@ -16,16 +16,6 @@ public:
     [[nodiscard]] virtual std::string setPlaceholder(const endstone::Player &player, std::string_view text) const = 0;
 
     /**
-     * Translates all placeholders into their corresponding values.
-     * <br>The pattern of a valid placeholder is <code>{<identifier>|<params>}</code>.
-     *
-     * @param player Player to parse the placeholders against
-     * @param texts List of texts to set the placeholder values in
-     * @return List of strings containing all translated placeholders
-     */
-    [[nodiscard]] virtual std::vector<std::string> setPlaceholder(const endstone::Player &player, std::vector<std::string_view> texts) const = 0;
-
-    /**
      * Check if a specific placeholder identifier is currently registered.
      *
      * @param identifier The identifier to check

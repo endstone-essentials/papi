@@ -6,7 +6,8 @@ HEAD = '{'
 TAIL = '}'
 
 
-def apply(text: str, player: Player | None, lookup: Callable[[str], Callable[[Player | None, str | None], str] | None]) -> str:
+def apply(player: Player | None, text: str,
+          lookup: Callable[[str], Callable[[Player | None, str | None], str] | None]) -> str:
     builder = []
     i = 0
     length = len(text)

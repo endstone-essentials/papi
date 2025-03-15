@@ -1,4 +1,5 @@
 import re
+import typing
 
 from typing import Callable
 from endstone.plugin import Plugin
@@ -15,13 +16,7 @@ class PlaceholderAPI(_PlaceholderAPI):
         self._placeholder_pattern = re.compile(r"[{]([^{}]+)[}]")
 
     def set_placeholder(self, player: Player | None, text: str) -> str:
-        return apply(text, player, self._registry.get)
-
-    def set_placeholder(self, player: Player | None, texts: list[str]) -> list[str]:
-        results: list[str] = []
-        for text in texts:
-            results.append(self.set_placeholder(player, text))
-        return results
+        return apply(player, text, self._registry.get)
 
     def is_registered(self, identifier: str) -> bool:
         return identifier in self._registry
