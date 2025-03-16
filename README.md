@@ -44,7 +44,7 @@ class JoinExample : public endstone::Plugin {
 public:
     void onEnable() override
     {
-        if (getServer().getPluginManager().isPluginEnabled("papi")) {
+        if (getServer().getPluginManager().getPlugin("papi")) {
             registerEvent(&JoinExample::onPlayerJoin, *this, endstone::EventPriority::Highest);
             papi_ = getServer().getServiceManager().load<papi::PlaceholderAPI>("PlaceholderAPI");
         }
@@ -81,7 +81,7 @@ class JoinExample(Plugin):
     soft_depend = ["papi"]
 
     def on_enable(self):
-        if self.server.plugin_manager.is_plugin_enabled("papi"):
+        if self.server.plugin_manager.get_plugin("papi"):
             self.register_events(self)
             self.papi = self.server.service_manager.load("PlaceholderAPI")
         else:

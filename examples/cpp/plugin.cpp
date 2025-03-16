@@ -5,7 +5,7 @@ class JoinExample : public endstone::Plugin {
 public:
     void onEnable() override
     {
-        if (getServer().getPluginManager().isPluginEnabled("papi")) {
+        if (getServer().getPluginManager().getPlugin("papi")) {
             registerEvent(&JoinExample::onPlayerJoin, *this, endstone::EventPriority::Highest);
             papi_ = getServer().getServiceManager().load<papi::PlaceholderAPI>("PlaceholderAPI");
         }

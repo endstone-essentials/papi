@@ -1,7 +1,9 @@
 from __future__ import annotations
-from endstone_papi import PlaceholderAPI
-from endstone.plugin import Plugin
+
 from endstone.event import event_handler, EventPriority, PlayerJoinEvent
+from endstone.plugin import Plugin
+
+from endstone_papi import PlaceholderAPI
 
 
 class JoinExample(Plugin):
@@ -13,7 +15,7 @@ class JoinExample(Plugin):
         self.papi: PlaceholderAPI | None = None
 
     def on_enable(self):
-        if self.server.plugin_manager.is_plugin_enabled("papi"):
+        if self.server.plugin_manager.get_plugin("papi"):
             self.register_events(self)
             self.papi = self.server.service_manager.load("PlaceholderAPI")
         else:
