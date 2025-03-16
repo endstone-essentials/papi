@@ -27,7 +27,7 @@ class PlaceholderAPIPlugin(Plugin):
 
     def __init__(self):
         super().__init__()
-        self._api = PlaceholderAPI()
+        self._api = PlaceholderAPI(self)
 
     def on_load(self):
         self.server.service_manager.register(
@@ -53,10 +53,10 @@ class PlaceholderAPIPlugin(Plugin):
                         )
                         return False
 
-                sender.send_message(self._api.set_placeholder(player, text))
+                sender.send_message(self._api.set_placeholders(player, text))
             case "list":
                 sender.send_message("Available placeholders:")
-                for identifier in self._api.get_registered_identifiers():
+                for identifier in self._api.registered_identifiers:
                     sender.send_message(f"- {identifier}")
 
         return True
