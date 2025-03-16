@@ -12,12 +12,12 @@ class PlaceholderAPI(IPlaceholderAPI):
     def __init__(self, plugin: Plugin):
         IPlaceholderAPI.__init__(self)
         self._plugin = plugin
-        self._registry = {}
+        self._registry: dict[str, Callable[[Player, str], str]] = {}
         self._placeholder_pattern = re.compile(r"[{]([^{}]+)[}]")
         self._register_default_placeholders()
 
-    def set_placeholders(self, player: Player | None, text: str) -> str:
-        return apply(player, text, self._registry.get)
+    def set_placeholders(self, player: Player, text: str) -> str:
+        return apply(player, text, self._registry)
 
     def is_registered(self, identifier: str) -> bool:
         return identifier in self._registry
@@ -25,8 +25,8 @@ class PlaceholderAPI(IPlaceholderAPI):
     def get_registered_identifiers(self) -> list[str]:
         return list(self._registry.keys())
 
-    def get_placeholder_pattern(self) -> re.Pattern[str]:
-        return self._placeholder_pattern
+    def get_placeholder_pattern(self) -> str:
+        return self._placeholder_pattern.pattern
 
     def contains_placeholders(self, text: str) -> bool:
         return self._placeholder_pattern.search(text) is not None
@@ -35,8 +35,9 @@ class PlaceholderAPI(IPlaceholderAPI):
         self,
         plugin: Plugin,
         identifier: str,
-        processor: Callable[[Player | None, str | None], str],
+        processor: Callable[[Player, str], str],
     ) -> bool:
+        # TODO(daoge): duplicate placeholders are not allowed in the current design, shall we implement namespaces?
         if self.is_registered(identifier):
             identifier = f"{plugin.name}:{identifier}"
         if self.is_registered(identifier):

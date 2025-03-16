@@ -9,7 +9,7 @@ TAIL = "}"
 def apply(
     player: Player | None,
     text: str,
-    lookup: Callable[[str], Callable[[Player | None, str | None], str] | None],
+    lookup: dict[str, Callable[[Player, str], str]],
 ) -> str:
     builder = []
     i = 0
@@ -54,17 +54,19 @@ def apply(
         if invalid:
             builder.append(HEAD + identifier_str)
             if identified:
-                builder.append("_" + parameters_str)
+                builder.append(
+                    "_" + parameters_str
+                )  # TODO(daoge): colon or underscore??
             if had_space:
                 builder.append(" ")
             i += 1
             continue
 
-        placeholder = lookup(identifier_str)
+        placeholder = lookup.get(identifier_str, None)
         if placeholder is None:
             builder.append(HEAD + identifier_str)
             if identified:
-                builder.append("_")
+                builder.append("_")  # TODO(daoge): colon or underscore??
             builder.append(parameters_str + TAIL)
             i += 1
             continue
@@ -73,7 +75,7 @@ def apply(
         if replacement is None:
             builder.append(HEAD + identifier_str)
             if identified:
-                builder.append("_")
+                builder.append("_")  # TODO(daoge): colon or underscore??
             builder.append(parameters_str + TAIL)
             i += 1
             continue
