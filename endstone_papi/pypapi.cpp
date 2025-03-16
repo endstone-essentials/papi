@@ -38,7 +38,7 @@ public:
     }
 };
 
-PYBIND11_MODULE(_papi, m)
+PYBIND11_MODULE(pypapi, m)
 {
     py::module_::import("endstone");
     py::module_::import("endstone.plugin");
