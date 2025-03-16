@@ -1,4 +1,4 @@
-from typing import Callable, Optional, Any
+from typing import Callable
 
 from endstone import Player
 
@@ -7,9 +7,9 @@ TAIL = "}"
 
 
 def apply(
-    player: Player | None,
-    text: str,
-    lookup: dict[str, Callable[[Player, str], str]],
+        player: Player | None,
+        text: str,
+        lookup: dict[str, Callable[[Player, str], str]],
 ) -> str:
     builder = []
     i = 0

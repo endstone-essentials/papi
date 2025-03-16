@@ -1,10 +1,13 @@
-import re
-import datetime
+from __future__ import annotations
 
+import datetime
+import re
 from typing import Callable
-from endstone.plugin import Plugin
-from ._papi import PlaceholderAPI as IPlaceholderAPI
+
 from endstone import Player
+from endstone.plugin import Plugin
+
+from ._papi import PlaceholderAPI as IPlaceholderAPI
 from .chars_replacer import apply
 
 
@@ -12,11 +15,11 @@ class PlaceholderAPI(IPlaceholderAPI):
     def __init__(self, plugin: Plugin):
         IPlaceholderAPI.__init__(self)
         self._plugin = plugin
-        self._registry: dict[str, Callable[[Player, str], str]] = {}
+        self._registry: dict[str, Callable[[Player | None, str], str]] = {}
         self._placeholder_pattern = re.compile(r"[{]([^{}]+)[}]")
         self._register_default_placeholders()
 
-    def set_placeholders(self, player: Player, text: str) -> str:
+    def set_placeholders(self, player: Player | None, text: str) -> str:
         """
         Translates all placeholders into their corresponding values.
         The pattern of a valid placeholder is {<identifier>:<params>}.
@@ -51,17 +54,18 @@ class PlaceholderAPI(IPlaceholderAPI):
         return self._placeholder_pattern.search(text) is not None
 
     def register_placeholder(
-        self,
-        plugin: Plugin,
-        identifier: str,
-        processor: Callable[[Player, str], str],
+            self,
+            plugin: Plugin,
+            identifier: str,
+            processor: Callable[[Player | None, str], str],
     ) -> bool:
-        # TODO(daoge): duplicate placeholders are not allowed in the current design, shall we implement namespaces?
         if self.is_registered(identifier):
+            # use the fallback identifier with plugin name as the namespace
             identifier = f"{plugin.name}:{identifier}"
+
         if self.is_registered(identifier):
             self._plugin.logger.warning(
-                f"Plugin {plugin.name} trying to register a duplicate placeholder: {identifier}"
+                f"Plugin '{plugin.name}' trying to register a duplicate placeholder: {identifier}"
             )
             return False
 

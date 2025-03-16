@@ -1,6 +1,7 @@
 from endstone import Player
-from endstone.plugin import Plugin, ServicePriority
 from endstone.command import Command, CommandSender
+from endstone.plugin import Plugin, ServicePriority
+
 from .papi import PlaceholderAPI
 
 
@@ -38,7 +39,7 @@ class PlaceholderAPIPlugin(Plugin):
         self.server.service_manager.unregister_all(self)
 
     def on_command(
-        self, sender: CommandSender, command: Command, args: list[str]
+            self, sender: CommandSender, command: Command, args: list[str]
     ) -> bool:
         match args[0]:
             case "parse":

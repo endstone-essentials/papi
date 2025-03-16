@@ -11,9 +11,9 @@ class PyPlaceholderAPI : public papi::PlaceholderAPI {
 public:
     using PlaceholderAPI::PlaceholderAPI;
 
-    [[nodiscard]] std::string setPlaceholders(const endstone::Player &player, std::string_view text) const override
+    [[nodiscard]] std::string setPlaceholders(const endstone::Player *player, std::string_view text) const override
     {
-        PYBIND11_OVERRIDE_PURE_NAME(std::string, PlaceholderAPI, "set_placeholders", setPlaceholder, player, text);
+        PYBIND11_OVERRIDE_PURE_NAME(std::string, PlaceholderAPI, "set_placeholders", setPlaceholder, *player, text);
     }
 
     [[nodiscard]] bool isRegistered(std::string_view identifier) const override

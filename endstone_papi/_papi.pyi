@@ -1,12 +1,16 @@
 from __future__ import annotations
+
+from typing import Callable
+
 from endstone import Player
 from endstone.plugin import Service, Plugin
-from typing import Callable
 
 __all__ = ["PlaceholderAPI"]
 
+
 class PlaceholderAPI(Service):
     def __init__(self) -> None: ...
+
     def _get_placeholder_pattern(self) -> str:
         """
         Get the normal placeholder pattern.
@@ -28,16 +32,16 @@ class PlaceholderAPI(Service):
         """
 
     def register_placeholder(
-        self,
-        plugin: Plugin,
-        identifier: str,
-        processor: Callable[[Player, str], str],
+            self,
+            plugin: Plugin,
+            identifier: str,
+            processor: Callable[[Player | None, str], str],
     ) -> bool:
         """
         Attempt to register a placeholder.
         """
 
-    def set_placeholders(self, player: Player, text: str) -> str:
+    def set_placeholders(self, player: Player | None, text: str) -> str:
         """
         Translates all placeholders into their corresponding values.
         """
