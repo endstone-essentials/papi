@@ -1,6 +1,6 @@
 [build-system]
-requires = ["scikit-build-core", "pybind11"]
-build-backend = "scikit_build_core.build"
+requires = ["scikit-build-core-conan", "pybind11"]
+build-backend = "scikit_build_core_conan.build"
 
 [project]
 name = "endstone-papi"
