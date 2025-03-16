@@ -8,6 +8,12 @@ C++ support and Python bindings via the `endstone_papi` package for seamless int
 > please check out the latest build from our GitHub Actions
 > page: [Build Artifacts](https://github.com/endstone-essentials/papi/actions/workflows/build.yml).
 
+## Install
+
+- Download .whl file from [release](https://github.com/endstone-essentials/papi/releases) or [action](https://github.com/endstone-essentials/papi/actions/workflows/build.yml)
+- Put it into `plugins` folder
+- Restart the server, enjoy!
+
 ## Project Structure
 
 ```
@@ -129,16 +135,16 @@ There are a number of built-in placeholders that can be used once papi is instal
 - [x] `{device_os}` os name of player's current device
 - [x] `{locale}` player's locale
 
-## Contributing
-
-Contributions are welcome! Feel free to fork the repository, improve the code, and submit pull requests with your
-changes.
-
 ## Requirement
 
 Python: 3.10+
 
 Endstone: 0.6+
+
+## Contributing
+
+Contributions are welcome! Feel free to fork the repository, improve the code, and submit pull requests with your
+changes.
 
 ## License
 
