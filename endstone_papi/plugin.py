@@ -30,12 +30,16 @@ class PlaceholderAPIPlugin(Plugin):
         self._api = PlaceholderAPI()
 
     def on_load(self):
-        self.server.service_manager.register("PlaceholderAPI", self._api, self, ServicePriority.HIGHEST)
+        self.server.service_manager.register(
+            "PlaceholderAPI", self._api, self, ServicePriority.HIGHEST
+        )
 
     def on_disable(self):
         self.server.service_manager.unregister_all(self)
 
-    def on_command(self, sender: CommandSender, command: Command, args: list[str]) -> bool:
+    def on_command(
+        self, sender: CommandSender, command: Command, args: list[str]
+    ) -> bool:
         match args[0]:
             case "parse":
                 text: str = args[1]
@@ -44,7 +48,9 @@ class PlaceholderAPIPlugin(Plugin):
                     player_name: str = args[2]
                     player = self.server.get_player(player_name)
                     if player is None:
-                        sender.send_error_message(f"Could not find player {player_name}!")
+                        sender.send_error_message(
+                            f"Could not find player {player_name}!"
+                        )
                         return False
 
                 sender.send_message(self._api.set_placeholder(player, text))

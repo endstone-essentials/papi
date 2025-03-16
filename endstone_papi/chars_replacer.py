@@ -2,12 +2,15 @@ from typing import Callable, Optional, Any
 
 from endstone import Player
 
-HEAD = '{'
-TAIL = '}'
+HEAD = "{"
+TAIL = "}"
 
 
-def apply(player: Player | None, text: str,
-          lookup: Callable[[str], Callable[[Player | None, str | None], str] | None]) -> str:
+def apply(
+    player: Player | None,
+    text: str,
+    lookup: Callable[[str], Callable[[Player | None, str | None], str] | None],
+) -> str:
     builder = []
     i = 0
     length = len(text)
@@ -29,13 +32,13 @@ def apply(player: Player | None, text: str,
 
         while i < length:
             p = text[i]
-            if p == ' ' and not identified:
+            if p == " " and not identified:
                 had_space = True
                 break
             if p == TAIL:
                 invalid = False
                 break
-            if p == '|' and not identified:
+            if p == "|" and not identified:
                 identified = True
                 i += 1
                 continue
@@ -45,15 +48,15 @@ def apply(player: Player | None, text: str,
                 identifier_chars.append(p)
             i += 1
 
-        identifier_str = ''.join(identifier_chars)
-        parameters_str = ''.join(parameters_chars)
+        identifier_str = "".join(identifier_chars)
+        parameters_str = "".join(parameters_chars)
 
         if invalid:
             builder.append(HEAD + identifier_str)
             if identified:
-                builder.append('_' + parameters_str)
+                builder.append("_" + parameters_str)
             if had_space:
-                builder.append(' ')
+                builder.append(" ")
             i += 1
             continue
 
@@ -61,7 +64,7 @@ def apply(player: Player | None, text: str,
         if placeholder is None:
             builder.append(HEAD + identifier_str)
             if identified:
-                builder.append('_')
+                builder.append("_")
             builder.append(parameters_str + TAIL)
             i += 1
             continue
@@ -70,7 +73,7 @@ def apply(player: Player | None, text: str,
         if replacement is None:
             builder.append(HEAD + identifier_str)
             if identified:
-                builder.append('_')
+                builder.append("_")
             builder.append(parameters_str + TAIL)
             i += 1
             continue
@@ -78,4 +81,4 @@ def apply(player: Player | None, text: str,
         builder.append(replacement)
         i += 1
 
-    return ''.join(builder)
+    return "".join(builder)

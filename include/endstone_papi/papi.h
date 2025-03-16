@@ -53,6 +53,8 @@ public:
      * @param processor the processor that will process the placeholder
      * @return true if the placeholder was successfully registered, false otherwise
      */
-    [[nodiscard]] virtual bool registerPlaceholder(endstone::Plugin &plugin, std::string_view identifier, std::function<std::string(std::optional<endstone::Player&>, std::optional<std::string>)> processor) const = 0;
+    [[nodiscard]] virtual bool registerPlaceholder(
+        endstone::Plugin &plugin, std::string_view identifier,
+        std::function<std::string(std::optional<endstone::Player &>, std::optional<std::string>)> processor) const = 0;
 };
 } // namespace papi

@@ -22,7 +22,8 @@ public:
 
     [[nodiscard]] std::vector<std::string> getRegisteredIdentifiers() const override
     {
-        PYBIND11_OVERRIDE_PURE_NAME(std::vector<std::string>, PlaceholderAPI, "get_registered_identifiers", getRegisteredIdentifiers);
+        PYBIND11_OVERRIDE_PURE_NAME(std::vector<std::string>, PlaceholderAPI, "get_registered_identifiers",
+                                    getRegisteredIdentifiers);
     }
 
     // TODO: getPlaceholderPattern
@@ -32,9 +33,13 @@ public:
         PYBIND11_OVERRIDE_PURE_NAME(bool, PlaceholderAPI, "contains_placeholders", containsPlaceholders, text);
     }
 
-    [[nodiscard]] bool registerPlaceholder(endstone::Plugin &plugin, std::string_view identifier, std::function<std::string(std::optional<endstone::Player&>, std::optional<std::string>)> processor) const override
+    [[nodiscard]] bool registerPlaceholder(
+        endstone::Plugin &plugin, std::string_view identifier,
+        std::function<std::string(std::optional<endstone::Player &>, std::optional<std::string>)> processor)
+        const override
     {
-        PYBIND11_OVERRIDE_PURE_NAME(bool, PlaceholderAPI, "register_placeholder", registerPlaceholder, plugin, identifier, processor);
+        PYBIND11_OVERRIDE_PURE_NAME(bool, PlaceholderAPI, "register_placeholder", registerPlaceholder, plugin,
+                                    identifier, processor);
     }
 };
 
@@ -49,11 +54,11 @@ PYBIND11_MODULE(pypapi, m)
         .def("set_placeholder", &papi::PlaceholderAPI::setPlaceholder, py::arg("player"), py::arg("text"),
              "Translates all placeholders into their corresponding values.")
         .def("is_registered", &papi::PlaceholderAPI::isRegistered, py::arg("identifier"),
-            "Check if a specific placeholder identifier is currently registered.")
+             "Check if a specific placeholder identifier is currently registered.")
         .def("get_registered_identifiers", &papi::PlaceholderAPI::getRegisteredIdentifiers,
-            "Get all registered placeholder identifiers.")
+             "Get all registered placeholder identifiers.")
         .def("contains_placeholders", &papi::PlaceholderAPI::containsPlaceholders, py::arg("text"),
-            "Check if a String contains any placeholders.")
-        .def("register_placeholder", &papi::PlaceholderAPI::registerPlaceholder, py::arg("plugin"), py::arg("identifier"), py::arg("processor"),
-            "Attempt to register a placeholder.");
+             "Check if a String contains any placeholders.")
+        .def("register_placeholder", &papi::PlaceholderAPI::registerPlaceholder, py::arg("plugin"),
+             py::arg("identifier"), py::arg("processor"), "Attempt to register a placeholder.");
 }
