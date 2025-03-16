@@ -1,7 +1,7 @@
 from endstone import Player
 from endstone.plugin import Plugin, ServicePriority
 from endstone.command import Command, CommandSender
-from .pypapi import PlaceholderAPI
+from .papi import PlaceholderAPI
 
 
 class PlaceholderAPIPlugin(Plugin):

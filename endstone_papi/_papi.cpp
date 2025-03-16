@@ -1,4 +1,5 @@
 #include <endstone_papi/papi.h>
+#include <pybind11/functional.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
@@ -44,7 +45,7 @@ public:
     }
 };
 
-PYBIND11_MODULE(pypapi, m)
+PYBIND11_MODULE(_papi, m)
 {
     py::module_::import("endstone");
     py::module_::import("endstone.plugin");

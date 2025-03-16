@@ -1,18 +1,43 @@
-from endstone.plugin import Service
+from __future__ import annotations
 from endstone import Player
+from endstone.plugin import Service, Plugin
+from typing import Callable
 
 __all__ = ["PlaceholderAPI"]
 
 class PlaceholderAPI(Service):
+    def __init__(self) -> None: ...
+    def _get_placeholder_pattern(self) -> str:
+        """
+        Get the normal placeholder pattern.
+        """
+
+    def _get_registered_identifiers(self) -> list[str]:
+        """
+        Get all registered placeholder identifiers.
+        """
+
+    def contains_placeholders(self, text: str) -> bool:
+        """
+        Check if a String contains any placeholders.
+        """
+
+    def is_registered(self, identifier: str) -> bool:
+        """
+        Check if a specific placeholder identifier is currently registered.
+        """
+
+    def register_placeholder(
+        self,
+        plugin: Plugin,
+        identifier: str,
+        processor: Callable[[Player, str], str],
+    ) -> bool:
+        """
+        Attempt to register a placeholder.
+        """
+
     def set_placeholders(self, player: Player, text: str) -> str:
         """
         Translates all placeholders into their corresponding values.
-        The pattern of a valid placeholder is {<identifier>:<params>}.
-
-        Args:
-            player (Player): Player to parse the placeholders against.
-            text (str): Text to set the placeholder values in.
-
-        Returns:
-            str: String containing all translated placeholders.
         """

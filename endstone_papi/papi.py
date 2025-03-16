@@ -51,10 +51,10 @@ class PlaceholderAPI(IPlaceholderAPI):
         return self._placeholder_pattern.search(text) is not None
 
     def register_placeholder(
-            self,
-            plugin: Plugin,
-            identifier: str,
-            processor: Callable[[Player, str], str],
+        self,
+        plugin: Plugin,
+        identifier: str,
+        processor: Callable[[Player, str], str],
     ) -> bool:
         # TODO(daoge): duplicate placeholders are not allowed in the current design, shall we implement namespaces?
         if self.is_registered(identifier):
