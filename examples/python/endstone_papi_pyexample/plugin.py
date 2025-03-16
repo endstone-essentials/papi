@@ -1,3 +1,4 @@
+from __future__ import annotations
 from endstone_papi import PlaceholderAPI
 from endstone.plugin import Plugin
 from endstone.event import event_handler, EventPriority, PlayerJoinEvent
@@ -26,5 +27,5 @@ class JoinExample(Plugin):
         join_text = (
             "{player_name} joined the server! Their game mode is {player_gamemode}"
         )
-        join_text = self.papi.set_placeholder(event.player, join_text)
+        join_text = self.papi.set_placeholders(event.player, join_text)
         event.join_message = join_text
