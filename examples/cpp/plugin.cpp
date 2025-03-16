@@ -18,7 +18,7 @@ public:
     void onPlayerJoin(endstone::PlayerJoinEvent &event)
     {
         std::string join_text = "{player_name} joined the server! Their game mode is {player_gamemode}";
-        join_text = papi_->setPlaceholder(event.getPlayer(), join_text);
+        join_text = papi_->setPlaceholders(event.getPlayer(), join_text);
         event.setJoinMessage(join_text);
     }
 

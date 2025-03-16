@@ -16,7 +16,7 @@ class PyPlaceholderAPI(PlaceholderAPI):
         self._placeholder_pattern = re.compile(r"[{]([^{}]+)[}]")
         self._register_default_placeholders()
 
-    def set_placeholder(self, player: Player | None, text: str) -> str:
+    def set_placeholders(self, player: Player | None, text: str) -> str:
         return apply(player, text, self._registry.get)
 
     def is_registered(self, identifier: str) -> bool:

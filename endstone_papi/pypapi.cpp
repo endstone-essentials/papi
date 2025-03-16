@@ -10,9 +10,9 @@ class PyPlaceholderAPI : public papi::PlaceholderAPI {
 public:
     using PlaceholderAPI::PlaceholderAPI;
 
-    [[nodiscard]] std::string setPlaceholder(const endstone::Player &player, std::string_view text) const override
+    [[nodiscard]] std::string setPlaceholders(const endstone::Player &player, std::string_view text) const override
     {
-        PYBIND11_OVERRIDE_PURE_NAME(std::string, PlaceholderAPI, "set_placeholder", setPlaceholder, player, text);
+        PYBIND11_OVERRIDE_PURE_NAME(std::string, PlaceholderAPI, "set_placeholders", setPlaceholder, player, text);
     }
 
     [[nodiscard]] bool isRegistered(std::string_view identifier) const override
@@ -33,10 +33,8 @@ public:
         PYBIND11_OVERRIDE_PURE_NAME(bool, PlaceholderAPI, "contains_placeholders", containsPlaceholders, text);
     }
 
-    [[nodiscard]] bool registerPlaceholder(
-        endstone::Plugin &plugin, std::string_view identifier,
-        std::function<std::string(std::optional<endstone::Player &>, std::optional<std::string>)> processor)
-        const override
+    [[nodiscard]] bool registerPlaceholder(const endstone::Plugin &plugin, std::string_view identifier,
+                                           Processor processor) const override
     {
         PYBIND11_OVERRIDE_PURE_NAME(bool, PlaceholderAPI, "register_placeholder", registerPlaceholder, plugin,
                                     identifier, processor);
@@ -51,7 +49,7 @@ PYBIND11_MODULE(pypapi, m)
     py::class_<papi::PlaceholderAPI, PyPlaceholderAPI, endstone::Service, std::shared_ptr<papi::PlaceholderAPI>>(
         m, "PlaceholderAPI")
         .def(py::init<>())
-        .def("set_placeholder", &papi::PlaceholderAPI::setPlaceholder, py::arg("player"), py::arg("text"),
+        .def("set_placeholders", &papi::PlaceholderAPI::setPlaceholders, py::arg("player"), py::arg("text"),
              "Translates all placeholders into their corresponding values.")
         .def("is_registered", &papi::PlaceholderAPI::isRegistered, py::arg("identifier"),
              "Check if a specific placeholder identifier is currently registered.")

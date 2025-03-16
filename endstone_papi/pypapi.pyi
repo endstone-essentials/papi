@@ -4,7 +4,7 @@ from endstone import Player
 __all__ = ["PlaceholderAPI"]
 
 class PlaceholderAPI(Service):
-    def set_placeholder(self, player: Player, text: str) -> str:
+    def set_placeholders(self, player: Player, text: str) -> str:
         """
         Translates all placeholders into their corresponding values.
         The pattern of a valid placeholder is {<identifier>:<params>}.

@@ -5,6 +5,7 @@
 namespace papi {
 class PlaceholderAPI : public endstone::Service {
 public:
+    using Processor = std::function<std::string(const endstone::Player &, std::string)>;
     /**
      * Translates all placeholders into their corresponding values.
      * <br>The pattern of a valid placeholder is <code>{<identifier>|<params>}</code>.
@@ -13,7 +14,7 @@ public:
      * @param text Text to set the placeholder values in
      * @return String containing all translated placeholders
      */
-    [[nodiscard]] virtual std::string setPlaceholder(const endstone::Player &player, std::string_view text) const = 0;
+    [[nodiscard]] virtual std::string setPlaceholders(const endstone::Player &player, std::string_view text) const = 0;
 
     /**
      * Check if a specific placeholder identifier is currently registered.
@@ -53,8 +54,7 @@ public:
      * @param processor the processor that will process the placeholder
      * @return true if the placeholder was successfully registered, false otherwise
      */
-    [[nodiscard]] virtual bool registerPlaceholder(
-        endstone::Plugin &plugin, std::string_view identifier,
-        std::function<std::string(std::optional<endstone::Player &>, std::optional<std::string>)> processor) const = 0;
+    [[nodiscard]] virtual bool registerPlaceholder(const endstone::Plugin &plugin, std::string_view identifier,
+                                                   Processor processor) const = 0;
 };
 } // namespace papi
