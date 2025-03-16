@@ -17,17 +17,6 @@ class PlaceholderAPI(IPlaceholderAPI):
         self._register_default_placeholders()
 
     def set_placeholders(self, player: Player, text: str) -> str:
-        """
-        Translates all placeholders into their corresponding values.
-        The pattern of a valid placeholder is {<identifier>:<params>}.
-
-        Args:
-            player (Player): Player to parse the placeholders against.
-            text (str): Text to set the placeholder values in.
-
-        Returns:
-            str: String containing all translated placeholders.
-        """
         return apply(player, text, self._registry)
 
     def is_registered(self, identifier: str) -> bool:
