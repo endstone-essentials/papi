@@ -22,11 +22,14 @@ public:
 
     [[nodiscard]] std::vector<std::string> getRegisteredIdentifiers() const override
     {
-        PYBIND11_OVERRIDE_PURE_NAME(std::vector<std::string>, PlaceholderAPI, "get_registered_identifiers",
+        PYBIND11_OVERRIDE_PURE_NAME(std::vector<std::string>, PlaceholderAPI, "_get_registered_identifiers",
                                     getRegisteredIdentifiers);
     }
 
-    // TODO: getPlaceholderPattern
+    [[nodiscard]] std::string getPlaceholderPattern() const override
+    {
+        PYBIND11_OVERRIDE_PURE_NAME(std::string, PlaceholderAPI, "_get_placeholder_pattern", getPlaceholderPattern);
+    }
 
     [[nodiscard]] bool containsPlaceholders(std::string_view text) const override
     {
@@ -53,8 +56,10 @@ PYBIND11_MODULE(pypapi, m)
              "Translates all placeholders into their corresponding values.")
         .def("is_registered", &papi::PlaceholderAPI::isRegistered, py::arg("identifier"),
              "Check if a specific placeholder identifier is currently registered.")
-        .def("get_registered_identifiers", &papi::PlaceholderAPI::getRegisteredIdentifiers,
+        .def("_get_registered_identifiers", &papi::PlaceholderAPI::getRegisteredIdentifiers,
              "Get all registered placeholder identifiers.")
+        .def("_get_placeholder_pattern", &papi::PlaceholderAPI::getPlaceholderPattern,
+             "Get the normal placeholder pattern.")
         .def("contains_placeholders", &papi::PlaceholderAPI::containsPlaceholders, py::arg("text"),
              "Check if a String contains any placeholders.")
         .def("register_placeholder", &papi::PlaceholderAPI::registerPlaceholder, py::arg("plugin"),

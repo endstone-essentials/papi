@@ -17,25 +17,44 @@ class PlaceholderAPI(IPlaceholderAPI):
         self._register_default_placeholders()
 
     def set_placeholders(self, player: Player, text: str) -> str:
+        """
+        Translates all placeholders into their corresponding values.
+        The pattern of a valid placeholder is {<identifier>:<params>}.
+
+        Args:
+            player (Player): Player to parse the placeholders against.
+            text (str): Text to set the placeholder values in.
+
+        Returns:
+            str: String containing all translated placeholders.
+        """
         return apply(player, text, self._registry)
 
     def is_registered(self, identifier: str) -> bool:
         return identifier in self._registry
 
-    def get_registered_identifiers(self) -> list[str]:
+    @property
+    def registered_identifiers(self):
+        return self._get_registered_identifiers()
+
+    def _get_registered_identifiers(self) -> list[str]:
         return list(self._registry.keys())
 
-    def get_placeholder_pattern(self) -> str:
+    @property
+    def placeholder_pattern(self):
+        return self._get_placeholder_pattern()
+
+    def _get_placeholder_pattern(self) -> str:
         return self._placeholder_pattern.pattern
 
     def contains_placeholders(self, text: str) -> bool:
         return self._placeholder_pattern.search(text) is not None
 
     def register_placeholder(
-        self,
-        plugin: Plugin,
-        identifier: str,
-        processor: Callable[[Player, str], str],
+            self,
+            plugin: Plugin,
+            identifier: str,
+            processor: Callable[[Player, str], str],
     ) -> bool:
         # TODO(daoge): duplicate placeholders are not allowed in the current design, shall we implement namespaces?
         if self.is_registered(identifier):

@@ -31,12 +31,12 @@ public:
      */
     [[nodiscard]] virtual std::vector<std::string> getRegisteredIdentifiers() const = 0;
 
-    // /**
-    //  * Get the normal placeholder pattern.
-    //  *
-    //  * @return Regex Pattern of <code>[{]([^{}]+)[}]</code>
-    //  */
-    // [[nodiscard]] virtual ??? getPlaceholderPattern() const = 0;
+    /**
+     * Get the normal placeholder pattern.
+     *
+     * @return Regex Pattern of <code>[{]([^{}]+)[}]</code>
+     */
+    [[nodiscard]] virtual std::string getPlaceholderPattern() const = 0;
 
     /**
      * Check if a String contains any placeholders (<code>{<identifier>|<params>}</code>).
