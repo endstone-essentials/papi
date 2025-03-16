@@ -11,7 +11,7 @@ authors = [
 ]
 description = "A Placeholder API Plugin for Endstone."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 keywords = ["plugin", "python", "c++", "minecraft", "bedrock", "papi"]
 license = { file = "LICENSE" }
 
