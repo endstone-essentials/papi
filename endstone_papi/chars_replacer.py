@@ -1,4 +1,4 @@
-from typing import Callable, Optional, Any
+from typing import Callable
 
 from endstone import Player
 
@@ -55,8 +55,8 @@ def apply(
             builder.append(HEAD + identifier_str)
             if identified:
                 builder.append(
-                    "_" + parameters_str
-                )  # TODO(daoge): colon or underscore??
+                    "|" + parameters_str
+                )
             if had_space:
                 builder.append(" ")
             i += 1
@@ -66,7 +66,7 @@ def apply(
         if placeholder is None:
             builder.append(HEAD + identifier_str)
             if identified:
-                builder.append("_")  # TODO(daoge): colon or underscore??
+                builder.append("|")
             builder.append(parameters_str + TAIL)
             i += 1
             continue
@@ -75,7 +75,7 @@ def apply(
         if replacement is None:
             builder.append(HEAD + identifier_str)
             if identified:
-                builder.append("_")  # TODO(daoge): colon or underscore??
+                builder.append("|")
             builder.append(parameters_str + TAIL)
             i += 1
             continue
