@@ -11,7 +11,7 @@ class PlaceholderAPIPlugin(Plugin):
     commands = {
         "papi": {
             "description": "PlaceholderAPI command",
-            "usage": [
+            "usages": [
                 "/papi parse <text: message> [player: player]",
                 "/papi list",
             ],
