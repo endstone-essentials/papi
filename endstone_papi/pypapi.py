@@ -3,14 +3,14 @@ import datetime
 
 from typing import Callable
 from endstone.plugin import Plugin
-from .pypapi import PlaceholderAPI as _PlaceholderAPI
+from .pypapi import PlaceholderAPI
 from endstone import Player
 from .chars_replacer import apply
 
 
-class PlaceholderAPI(_PlaceholderAPI):
+class PyPlaceholderAPI(PlaceholderAPI):
     def __init__(self, plugin: Plugin):
-        _PlaceholderAPI.__init__(self)
+        PlaceholderAPI.__init__(self)
         self._plugin = plugin
         self._registry = {}
         self._placeholder_pattern = re.compile(r"[{]([^{}]+)[}]")

@@ -30,7 +30,7 @@ endstone-essentials/papi/
 > [!NOTE]
 > you can obtain the `papi.h` header file packaged within the `.whl` file.
 
-```cpp
+```c++
 #include <endstone/endstone.hpp>
 #include <endstone_papi/papi.h>
 
@@ -95,10 +95,50 @@ For the full codes, check our [Python Example Plugin](examples/python).
 
 ![](assets/screenshot.jpg)
 
+## Built-in Placeholders
+
+There are a number of built-in placeholders that can be used once papi is installed:
+
+- [x] `{x}` x coordinate
+- [x] `{y}` y coordinate
+- [x] `{z}` z coordinate
+- [x] `{player_name}` player's name
+- [x] `{dimension}` dimension name
+- [x] `{dimension_id}` dimension id
+- [x] `{ping}` player ping
+- [x] `{date}` date
+- [x] `{time}` time
+- [x] `{datetime}` date and time
+- [x] `{year}` year
+- [x] `{month}` month
+- [x] `{day}` day
+- [x] `{hour}` hour
+- [x] `{minute}` minute
+- [x] `{second}` second
+- [x] `{mc_version}` minecraft version
+- [x] `{online}` online player count
+- [x] `{max_online}` max online player count
+- [x] `{address}` player's address
+- [x] `{runtime_id}` player's runtime id
+- [x] `{exp_level}` player's experience level
+- [x] `{total_exp}` player's experience in total
+- [x] `{exp_progress}` player's experience progress
+- [x] `{game_mode}` player's game mode
+- [x] `{xuid}` player's xuid
+- [x] `{uuid}` player's uuid
+- [x] `{device_os}` os name of player's current device
+- [x] `{locale}` player's locale
+
 ## Contributing
 
 Contributions are welcome! Feel free to fork the repository, improve the code, and submit pull requests with your
 changes.
+
+## Requirement
+
+Python: 3.10+
+
+Endstone: 0.6+
 
 ## License
 
