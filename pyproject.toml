@@ -6,12 +6,13 @@ build-backend = "scikit_build_core.build"
 name = "endstone-papi"
 version = "0.0.1"
 authors = [
-    { name = "Vincent Wu", email = "magicdroidx@gmail.com" }
+    { name = "Vincent Wu", email = "magicdroidx@gmail.com" },
+    { name = "daoge_cmd", email = "3523206925@qq.com" },
 ]
 description = "A Placeholder API Plugin for Endstone."
 readme = "README.md"
-requires-python = ">=3.9"
-keywords = ["plugin", "python", "minecraft", "bedrock"]
+requires-python = ">=3.10"
+keywords = ["plugin", "python", "c++", "minecraft", "bedrock", "papi"]
 license = { file = "LICENSE" }
 
 [project.entry-points."endstone"]
