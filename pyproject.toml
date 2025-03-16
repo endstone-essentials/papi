@@ -29,6 +29,9 @@ install.components = ["python"]
 install.strip = false
 sdist.exclude = ["endstone_papi/*.cpp"]
 
+[tool.scikit-build-core-conan]
+config = ["tools.cmake.cmaketoolchain:generator=Ninja"]
+
 [tool.cibuildwheel]
 skip = ["pp*"]
 
