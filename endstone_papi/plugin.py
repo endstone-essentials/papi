@@ -12,10 +12,10 @@ class PlaceholderAPIPlugin(Plugin):
         "papi": {
             "description": "PlaceholderAPI command",
             "usages": [
-                "/papi parse <text: message> [player: player]",
-                "/papi list",
+                "/papi (parse)<parse: PapiParseCmd> <text: message> [player: player]",
+                "/papi (list)<list: PapiListCmd>",
             ],
-            "permission": "papi.command.papi",
+            "permissions": ["papi.command.papi"],
         }
     }
 
