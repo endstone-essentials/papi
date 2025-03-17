@@ -22,10 +22,10 @@ class PlaceholderAPI(IPlaceholderAPI):
     def set_placeholders(self, player: Player | None, text: str) -> str:
         """
         Translates all placeholders into their corresponding values.
-        The pattern of a valid placeholder is {<identifier>:<params>}.
+        The pattern of a valid placeholder is {<identifier>|<params>}.
 
         Args:
-            player (Player): Player to parse the placeholders against.
+            player (Player | None): Player to parse the placeholders against.
             text (str): Text to set the placeholder values in.
 
         Returns:
@@ -34,10 +34,25 @@ class PlaceholderAPI(IPlaceholderAPI):
         return apply(player, text, self._registry)
 
     def is_registered(self, identifier: str) -> bool:
+        """
+        Check if a specific placeholder identifier is currently registered.
+
+        Args:
+            identifier (str): The identifier to check.
+
+        Returns:
+            bool: True if identifier is already registered, False otherwise.
+        """
         return identifier in self._registry
 
     @property
     def registered_identifiers(self):
+        """
+        Get all registered placeholder identifiers.
+
+        Returns:
+            list[str]: A list containing the identifiers of all registered placeholders.
+        """
         return self._get_registered_identifiers()
 
     def _get_registered_identifiers(self) -> list[str]:
@@ -45,12 +60,27 @@ class PlaceholderAPI(IPlaceholderAPI):
 
     @property
     def placeholder_pattern(self):
+        """
+        Get the normal placeholder pattern.
+
+        Returns:
+            str: Regex pattern of [{]([^{}]+)[}].
+        """
         return self._get_placeholder_pattern()
 
     def _get_placeholder_pattern(self) -> str:
         return self._placeholder_pattern.pattern
 
     def contains_placeholders(self, text: str) -> bool:
+        """
+        Check if a string contains any placeholders ({<identifier>|<params>}).
+
+        Args:
+            text (str): String to check.
+
+        Returns:
+            bool: True if string contains any matches to the bracket placeholder pattern, False otherwise.
+        """
         return self._placeholder_pattern.search(text) is not None
 
     def register_placeholder(
@@ -59,6 +89,17 @@ class PlaceholderAPI(IPlaceholderAPI):
             identifier: str,
             processor: Callable[[Player | None, str], str],
     ) -> bool:
+        """
+        Attempt to register a placeholder.
+
+        Args:
+            plugin (Plugin): The plugin that is registering the placeholder.
+            identifier (str): The identifier of the placeholder.
+            processor (Callable[[Player | None, str], str]): The processor that will process the placeholder.
+
+        Returns:
+            bool: True if the placeholder was successfully registered, False otherwise.
+        """
         if self.is_registered(identifier):
             # use the fallback identifier with plugin name as the namespace
             identifier = f"{plugin.name}:{identifier}"
