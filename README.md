@@ -101,6 +101,12 @@ For the full codes, check our [Python Example Plugin](examples/python).
 
 ![](assets/screenshot.jpg)
 
+## Placeholder Structure
+
+The structure of a placeholder is `{<identifier>|<params>}`. Field `params` are optional and can be used to provide additional
+information to the placeholder. The format of `params` is decided by the processor of the placeholder indicated by `identifier`.
+When `params` is missing, you can simply write the placeholder as `{identifier}`.
+
 ## Built-in Placeholders
 
 There are a number of built-in placeholders that can be used once papi is installed:
